@@ -71,3 +71,33 @@ class A1B1Circuit(Circuit):
         self.circuit.h(1)
         
         self.measure()
+        
+        
+class CompactCircuit:
+    def __init__(self):
+        circuit = QuantumCircuit(8, 8)
+        circuit.h([0, 2, 4, 6])
+        [circuit.cx(0, 1), circuit.cx(2, 3), circuit.cx(4, 5), circuit.cx(6, 7)]
+        # a0b0 
+        circuit.z(0)
+        circuit.h(1)
+        # a0b1
+        circuit.z(2)
+        circuit.z(3)
+        circuit.x(3)
+        circuit.h(3)
+        # a1b0
+        circuit.x(4)
+        circuit.h(5)
+        # a1b1
+        circuit.x(6)
+        circuit.z(7)
+        circuit.x(7)
+        circuit.h(7)
+        
+        self.circuit = circuit
+        
+        self.circuit.barrier()
+    
+    def measure(self):
+        self.circuit.measure(range(8), range(8))
