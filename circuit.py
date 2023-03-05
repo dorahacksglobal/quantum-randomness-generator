@@ -90,9 +90,6 @@ class A1B1Circuit(Circuit):
         self.circuit.tdg(1)
         self.circuit.h(1)
         
-<<<<<<< Updated upstream
-        self.measure()
-=======
         self.finish()
         
         
@@ -127,4 +124,3 @@ class CompactCircuit:
         
     def save_state_vector(self):
         self.save_state_vector()
->>>>>>> Stashed changes
