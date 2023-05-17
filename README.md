@@ -42,7 +42,7 @@ Another advantage of DI-QRNG is that it does not require any assumptions about t
 
 ## Workflow of DI-QRNG
 
-![](https://hackmd.io/_uploads/BkzyIrfBh.png)
+![](./README_pic/workflow.png)
 
 ## Randomness extraction and assessment
 
@@ -107,11 +107,11 @@ TBD
 <span id='appA'> </span>
 
 ### PRNG NIST test
-![](https://i.imgur.com/sywcN6C.png)
-![](https://i.imgur.com/MC7aaFt.png)
+![](./README_pic/PRNG_1.png)
+![](./README_pic/PRNG_2.png)
 
 ### QRNG NIST test
-![](https://i.imgur.com/9QsM2eS.png)
-![](https://i.imgur.com/NjNoHf1.png)
+![](./README_pic/QRNG_1.png)
+![](./README_pic/QRNG_2.png)
 
 
