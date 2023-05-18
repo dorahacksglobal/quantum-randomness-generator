@@ -13,6 +13,7 @@ This repository is a collection of DoraHack's experiments for certified quantum 
         * [Quantum circuits](#quantum-circuits)
         * [Results](#results)
         * [Discussions](#discussions)
+        * [Problems](#problems)
     * [References](#references)
     * [Appendix A](#appendix-a)
         * [PRNG NIST test](#prng-nist-test)
@@ -111,13 +112,13 @@ To achieve the device-independent, a Bell state is necessary, which can be creat
 
 **STEP 1: Entanglement generation and characterization**
 
-In our experiment, we use the Regetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, single-qubit gate fidelity of $99.7%%$, two-qubit gate fidelity of $93.6%%$.
+In our experiment, we use the Regetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, single-qubit gate fidelity of $99.7$%, two-qubit gate fidelity of $93.6$%.
 
 First, we use quantum tomography [5] to reconstruct the denstiy matrix of Bell state (see `Regetti_Tomography_pub.ipynb` and `DM_reconstruction.ipynb`), as the following shows:
 
 ![](./README_pic/densitymatrix.png)
 
-The fidelity can be calculated as $86.87%%$, which is larger than the classical threshold of $50%%$. And the non-zero values of anti-diagonal elements are direct evidence for the entanglement.
+The fidelity can be calculated as $86.87$%, which is larger than the classical threshold of $50$%. And the non-zero values of anti-diagonal elements are direct evidence for the entanglement.
 
 **STEP 2: CHSH game**
 
@@ -164,9 +165,13 @@ To characterize the randomness, we use the NIST test suite for our random number
 
 ### Discussions
 
+In summary, we demonstrate the realization of Bell's theorem certified quantum random number generation using cloud quantum computers. Based on that the entanglement fidelity of Bell state is $86.87$% and the CHSH game score is $0.8036$, we extract more than $70000$ real random number and pass the NIST test to prove the randomness. In the future, we expect better CHSH score to improve the min-entropy value and we also prospect that randomness expansion is possible using superconducting quantum computer. Besides, we also note that the quantum advantages can also be used to achieve certified quantum random number generation [7].
+
+### Problems
+
 **Problem 1: Entanglement fidelity and CHSH score are not stable for Regetti quantum computer**
 
-Although in previous section, the entanglement fidelity is $86.87%%$ and the CHSH score is $0.8036$, which definitely prove the quantum computer is "quantum". But actually, in some accesses to Regetti, we obtain near entanglement-free result. Here, we give an example:
+Although in previous section, the entanglement fidelity is $86.87$% and the CHSH score is $0.8036$, which definitely prove the quantum computer is "quantum". But actually, in some accesses to Regetti, we obtain near entanglement-free result. Here, we give an example:
 
 The density matrix is:
 
@@ -187,6 +192,8 @@ It's obvious that the anti-diagonal elements are near varnishing, which means it
 [5] James, Daniel FV, et al. "Measurement of qubits." Physical Review A 64.5 (2001): 052312.
 
 [6] Pironio, Stefano, et al. "Random numbers certified by Bell’s theorem." Nature 464.7291 (2010): 1021-1024.
+
+[7] Morvan, A., et al. "Phase transition in Random Circuit Sampling." arXiv preprint arXiv:2304.11119 (2023).
 
 <!--## Comparison between QRNG and VRF-->
 
