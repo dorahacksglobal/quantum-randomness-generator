@@ -111,13 +111,13 @@ To achieve the device-independent, a Bell state is necessary, which can be creat
 
 **STEP 1: Entanglement generation and characterization**
 
-In our experiment, we use the Regetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, single-qubit gate fidelity of $99.7\%$, two-qubit gate fidelity of $93.6\%$.
+In our experiment, we use the Regetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, single-qubit gate fidelity of $99.7%$, two-qubit gate fidelity of $93.6%$.
 
 First, we use quantum tomography [5] to reconstruct the denstiy matrix of Bell state (see `Regetti_Tomography_pub.ipynb` and `DM_reconstruction.ipynb`), as the following shows:
 
 ![](./README_pic/densitymatrix.png)
 
-The fidelity can be calculated as $86.87\%$, which is larger than the classical threshold of $50\%$. And the non-zero values of anti-diagonal elements are direct evidence for the entanglement.
+The fidelity can be calculated as $86.87%$, which is larger than the classical threshold of $50%$. And the non-zero values of anti-diagonal elements are direct evidence for the entanglement.
 
 **STEP 2: CHSH game**
 
