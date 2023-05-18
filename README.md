@@ -2,7 +2,21 @@
 
 This repository is a collection of DoraHack's experiments for certified quantum random number generation using cloud quantum computers. 
 
-[TOC]
+* [Realization of Bell's theorem certified quantum random number generation using cloud quantum computers](#realization-of-bells-theorem-certified-quantum-random-number-generation-using-cloud-quantum-computers)
+    * [Random number applications](#random-number-applications)
+    * [Classifications of random number generation](#classifications-of-random-number-generation)
+    * [DI-QRNG and Bell's theorem](#di-qrng-and-bells-theorem)
+    * [Workflow of DI-QRNG](#workflow-of-di-qrng)
+    * [Randomness extraction and assessment](#randomness-extraction-and-assessment)
+    * [Experimental realization on cloud quantum computers](#experimental-realization-on-cloud-quantum-computers)
+        * [Clauser-Horne-ShimonyHolt (CHSH) game](#clauser-horne-shimonyholt-chsh-game)
+        * [Quantum circuits](#quantum-circuits)
+        * [Results](#results)
+        * [Discussions](#discussions)
+    * [References](#references)
+    * [Appendix A](#appendix-a)
+        * [PRNG NIST test](#prng-nist-test)
+        * [QRNG NIST test](#qrng-nist-test)
 
 <!--## Glossary
 
@@ -69,10 +83,10 @@ In this section, we explain the experimental details and results to generate qua
 
 ### Clauser-Horne-ShimonyHolt (CHSH) game
 
-CHSH game was proposed in paper [3], in which an inequality is used to discriminate the quantum mechanics from the local hidden-variable theories. Here, we empoly the same game settings as the paper [4]. In every trial, a Bell state is generated and distributed to two players, named Alice and Bob. The two players randomly select their measurements basis as $x_i\in\{0,1\}$ and $y_i\in\{0,1\}$. Then, the measurement outputs is denotes as $a_i, b_i$. The Bell value in single trial $i$ is calculated as
+CHSH game was proposed in paper [3], in which an inequality is used to discriminate the quantum mechanics from the local hidden-variable theories. Here, we empoly the same game settings as the paper [4]. In every trial, a Bell state is generated and distributed to two players, named Alice and Bob. The two players randomly select their measurements basis as $a_i\in\{0,1\}$ and $b_i\in\{0,1\}$. Then, the measurement outputs is denotes as $x_i, y_i$. The Bell value in single trial $i$ is calculated as
 
 $$J_i=\begin{cases}
-1,&\text{if}\quad a_i\bigoplus b_i=x_iy_i \\
+1,&\text{if}\quad x_i\bigoplus y_i=a_ib_i \\
 0,&\text{others}
 \end{cases}$$
 
@@ -84,22 +98,95 @@ here, $3/4$ is the classical threshold.
 
 ### Quantum circuits
 
-TBD
+To achieve the device-independent, a Bell state is necessary, which can be created by a `Hadamard gate` for qubit $0$ and a `controlled-not (CNOT) gate` between qubit $0$ and qubit $1$. Then, Alice and Bob perform independent and random measurements on their own qubit. For Alice, her measurements have two possible settings: $\sigma_z$ and $\sigma_x$, which are [Pauli matrices](https://en.wikipedia.org/wiki/Pauli_matrices). Similarly, for Bob his settings are: $\frac{1}{\sqrt{2}}\left(\sigma_z+\sigma_x\right)$ and $\frac{1}{\sqrt{2}}\left(\sigma_z-\sigma_x\right)$. Thus, there are four possible quantum circuits, and we summarize here (using [Qiskit](https://qiskit.org/))
+
+| Quantum Circuits | Qiskit plot |
+| ---------------- | ----------- |
+| $(a_i, b_i) = (0, 0)$ | <img src="./README_pic/a0b0_circuit.png" width = "400"> |
+| $(a_i, b_i) = (0, 1)$ | <img src="./README_pic/a0b1_circuit.png" width = "400"> |
+| $(a_i, b_i) = (1, 0)$ | <img src="./README_pic/a1b0_circuit.png" width = "400"> |
+| $(a_i, b_i) = (1, 1)$ | <img src="./README_pic/a1b1_circuit.png" width = "400"> |
 
 ### Results
 
-TBD
+**STEP 1: Entanglement generation and characterization**
+
+In our experiment, we use the Regetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, single-qubit gate fidelity of $99.7\%$, two-qubit gate fidelity of $93.6\%$.
+
+First, we use quantum tomography [5] to reconstruct the denstiy matrix of Bell state (see `Regetti_Tomography_pub.ipynb` and `DM_reconstruction.ipynb`), as the following shows:
+
+![](./README_pic/densitymatrix.png)
+
+The fidelity can be calculated as $86.87\%$, which is larger than the classical threshold of $50\%$. And the non-zero values of anti-diagonal elements are direct evidence for the entanglement.
+
+**STEP 2: CHSH game**
+
+Then, we perform the CHSH game with `shots = 1E5` for every setting (see `Regetti_CHSH_pub.ipynb`) and get the results as the following table shows:
+
+| Basis Setting | $(a_i, b_i) = (0, 0)$ | $(a_i, b_i) = (0, 1)$ | $(a_i, b_i) = (1, 0)$ |$(a_i, b_i) = (1, 1)$|
+|:-:|:-:|:-:|:-:|:-:|
+|$(x_i, y_i) = (0, 0)$|41998|7712|8590|41700|
+|$(x_i, y_i) = (0, 1)$|36513|12554|7498|43435|
+|$(x_i, y_i) = (1, 0)$|41091|12469|9505|36935|
+|$(x_i, y_i) = (1, 1)$|9583|44280|35503|10634|
+
+The CHSH score can be calculated as $0.8036$, which is significantly larger than $0.75$, indicating the quantum correlation does exist during the experiments.
+
+**STEP 3: Determine min-entropy and randomness extraction**
+
+To determine the min-entropy value, we compare the criteria in paper [6] (see `Nature2010.ipynb`) and paper [4] (see `PRL2018.ipynb`), as the following picture shows:
+
+![](./README_pic/min_entropy.png)
+
+So, we choose the min-entropy calculation in paper [6], and the min-entropy is $0.186$ for our experimental parameters. We also note that for different parameters, the relationship of min-entropy between paper [6] and paper [4] is different. When trial number is larger, the calculation in paper [4] can obtain larger min-entropy. 
+
+Finally, we use the Toeplitz-hashing extractor to extract the ultimate random numbers, see `Randomness_extraction.ipynb`. As a result, we obtain $74305$ random numbers.
+
+**STEP 4: NIST test for the output of random numbers**
+
+To characterize the randomness, we use the NIST test suite for our random number and the result is summarized as:
+
+| Statistical tests | P value | Result |
+|:-:|:-:|:-:|
+|Frequency|0.193146|Success|
+|BlockFrequency|0.646496|Success|
+|CumulativeSums|0.294998|Success|
+|Runs|0.855048|Success|
+|LongestRun|0.903532|Success|
+|Rank|0.621005|Success|
+|FFT|0.919390|Success|
+|NonOverlappingTemplate|0.601024|Success|
+|OverlappingTemplate|0.696979|Success|
+|ApproximateEntropy|0.265845|Success|
+|Serial|0.304860|Success|
+|LinearComplexity|0.925104|Success|
+
 
 ### Discussions
 
-TBD
+**Problem 1: Entanglement fidelity and CHSH score are not stable for Regetti quantum computer**
+
+Although in previous section, the entanglement fidelity is $86.87%$ and the CHSH score is $0.8036$, which definitely prove the quantum computer is "quantum". But actually, in some accesses to Regetti, we obtain near entanglement-free result. Here, we give an example:
+
+The density matrix is:
+
+![](./README_pic/densitymatrix_noentanglement.png)
+
+It's obvious that the anti-diagonal elements are near varnishing, which means it's more like classical state.
 
 ## References
 
 [1] Bruynsteen, Cédric, et al. "100-Gbit/s integrated quantum random number generator based on vacuum fluctuations." PRX Quantum 4.1 (2023): 010330.
+
 [2] Liu, Wen-Zhao, et al. "Device-independent randomness expansion against quantum side information." Nature Physics 17.4 (2021): 448-451.
+
 [3] Clauser, John F., et al. "Proposed experiment to test local hidden-variable theories." Physical review letters 23.15 (1969): 880.
+
 [4] Liu, Yang, et al. "High-speed device-independent quantum random number generation without a detection loophole." Physical review letters 120.1 (2018): 010503.
+
+[5] James, Daniel FV, et al. "Measurement of qubits." Physical Review A 64.5 (2001): 052312.
+
+[6] Pironio, Stefano, et al. "Random numbers certified by Bell’s theorem." Nature 464.7291 (2010): 1021-1024.
 
 <!--## Comparison between QRNG and VRF-->
 

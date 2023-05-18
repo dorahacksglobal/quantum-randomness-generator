@@ -2,8 +2,10 @@ from braket.circuits import Circuit
 from braket.aws import AwsDevice
 
 class TwoBitCircuit():
-    def __init__(self, code):
+    def __init__(self, code, control, act):
         self.__name__ = code
+        self.control = control
+        self.act = act
         self.circuit = Circuit()
         self._activate_bell_state()
     
@@ -21,23 +23,23 @@ class TwoBitCircuit():
     
     def _activate_bell_state(self):
         self.circuit = Circuit()
-        self.circuit.h(0).cnot(0, 1)
+        self.circuit.h(self.control).cnot(self.control, self.act)
         return 
         
     def _apply_a0b0(self):
-        self.circuit.h(0)
-        self.circuit.s(1).h(1).t(1).h(1)
+        self.circuit.s(self.act).h(self.act).t(self.act).h(self.act)
         return 
     
     def _apply_a0b1(self):
-        self.circuit.h(0)
-        self.circuit.s(1).h(1).ti(1).h(1)
+        self.circuit.s(self.act).h(self.act).ti(self.act).h(self.act)
         return 
     
     def _apply_a1b0(self):
-        self.circuit.s(1).h(1).t(1).h(1)
+        self.circuit.h(self.control)
+        self.circuit.s(self.act).h(self.act).t(self.act).h(self.act)
         return 
     
     def _apply_a1b1(self):
-        self.circuit.s(1).h(1).ti(1).h(1)
+        self.circuit.h(self.control)
+        self.circuit.s(self.act).h(self.act).ti(self.act).h(self.act)
         return 
