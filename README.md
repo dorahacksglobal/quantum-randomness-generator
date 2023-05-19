@@ -12,7 +12,8 @@ This repository is a collection of DoraHack's experiments for certified quantum 
         * [Clauser-Horne-ShimonyHolt (CHSH) game](#clauser-horne-shimonyholt-chsh-game)
         * [Quantum circuits](#quantum-circuits)
         * [Results](#results)
-        * [Discussions](#discussions)
+        * [Conclusion](#conclusion)
+        * [Discussion](#discussion)
         * [Problems](#problems)
     * [References](#references)
     * [Appendix A](#appendix-a)
@@ -114,15 +115,15 @@ To achieve the device-independent, a Bell state is necessary, which can be creat
 
 In our experiment, we use the Regetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, single-qubit gate fidelity of $99.7$%, two-qubit gate fidelity of $93.6$%.
 
-First, we use quantum tomography [5] to reconstruct the denstiy matrix of Bell state (see `Regetti_Tomography_pub.ipynb` and `DM_reconstruction.ipynb`), as the following shows:
+First, we use quantum tomography [5] to reconstruct the denstiy matrix of Bell state (see [`Regetti_Tomography_pub.ipynb`](./Regetti_Tomography_pub.ipynb) and [`DM_reconstruction_regetti.ipynb`](./DM_reconstruction_regetti.ipynb)), as the following shows:
 
-![](./README_pic/densitymatrix.png)
+![](./README_pic/densitymatrix_regetti.png)
 
 The fidelity can be calculated as $86.87$%, which is larger than the classical threshold of $50$%. And the non-zero values of anti-diagonal elements are direct evidence for the entanglement.
 
 **STEP 2: CHSH game**
 
-Then, we perform the CHSH game with `shots = 1E5` for every setting (see `Regetti_CHSH_pub.ipynb`) and get the results as the following table shows:
+Then, we perform the CHSH game with `shots = 1E5` for every setting (see [`Regetti_CHSH_pub.ipynb`](./Regetti_CHSH_pub.ipynb)) and get the results as the following table shows:
 
 | Basis Setting | $(a_i, b_i) = (0, 0)$ | $(a_i, b_i) = (0, 1)$ | $(a_i, b_i) = (1, 0)$ |$(a_i, b_i) = (1, 1)$|
 |:-:|:-:|:-:|:-:|:-:|
@@ -135,13 +136,13 @@ The CHSH score can be calculated as $0.8036$, which is significantly larger than
 
 **STEP 3: Determine min-entropy and randomness extraction**
 
-To determine the min-entropy value, we compare the criteria in paper [6] (see `Nature2010.ipynb`) and paper [4] (see `PRL2018.ipynb`), as the following picture shows:
+To determine the min-entropy value, we compare the criteria in paper [6] (see [`Nature2010.ipynb`](./Nature2010.ipynb) and [`Nature2010.txt`](./Nature2010.txt)) and paper [4] (see [`PRL2018.ipynb`](./PRL2018.ipynb) and [`PRL2018.txt`](./PRL2018.txt)), as the following picture shows:
 
 ![](./README_pic/min_entropy.png)
 
 So, we choose the min-entropy calculation in paper [6], and the min-entropy is $0.186$ for our experimental parameters. We also note that for different parameters, the relationship of min-entropy between paper [6] and paper [4] is different. When trial number is larger, the calculation in paper [4] can obtain larger min-entropy. 
 
-Finally, we use the Toeplitz-hashing extractor to extract the ultimate random numbers, see `Randomness_extraction.ipynb`. As a result, we obtain $74305$ random numbers.
+Finally, we use the Toeplitz-hashing extractor to extract the ultimate random numbers, see [`Randomness_extraction.ipynb`](./Randomness_extraction.ipynb). As a result, we obtain $74305$ random numbers.
 
 **STEP 4: NIST test for the output of random numbers**
 
@@ -162,10 +163,23 @@ To characterize the randomness, we use the NIST test suite for our random number
 |Serial|0.304860|Success|
 |LinearComplexity|0.925104|Success|
 
-
-### Discussions
+### Conclusion
 
 In summary, we demonstrate the realization of Bell's theorem certified quantum random number generation using cloud quantum computers. Based on that the entanglement fidelity of Bell state is $86.87$% and the CHSH game score is $0.8036$, we extract more than $70000$ real random number and pass the NIST test to prove the randomness. In the future, we expect better CHSH score to improve the min-entropy value and we also prospect that randomness expansion is possible using superconducting quantum computer. Besides, we also note that the quantum advantages can also be used to achieve certified quantum random number generation [7].
+
+### Discussion
+
+Apart from the Regetti Aspen-M-3, we also benchmark the [Aria-1](https://ionq.com/quantum-systems/aria) from ionQ. Aria-1 has 25 qubits and its single-qubit gate fidelity is $99.94$% and two-qubit gate fidelity is $99.4$%. 
+
+The density matrix of Bell state (see [`IonQ_Tomography_pub.ipynb`](./IonQ_Tomography_pub.ipynb) and [`DM_reconstruction_ionQ.ipynb`](./DM_reconstruction_ionQ.ipynb)) is:
+
+![](./README_pic/densitymatrix_ionQ.png)
+
+The calculated fidelity is $96.99$%, and it's higher than the Aspen-M-3.
+
+We also perform CHSH game using Aria-1, and the score is $0.8362$ (see [`IonQ_CHSH_pub.ipynb`](./IonQ_CHSH_pub.ipynb)). From these values, we can deduce the min-entropy is $0.424$, when the experiment trial number is 1E5 for every setting. This min-entropy is more than twice as large as Aspen-M-3.
+
+But, we want to point out the different costs for Aria-1 and Aspen-M-3. From AWS Braket service, for Aria-1, single shot needs $0.03$ USD, but for Aspen-M-3, single shot only needs $0.00035$ USD. So, it's much more expensive to achieve randomness expansion using Aria-1 in the future.
 
 ### Problems
 
@@ -175,7 +189,7 @@ Although in previous section, the entanglement fidelity is $86.87$% and the CHSH
 
 The density matrix is:
 
-![](./README_pic/densitymatrix_noentanglement.png)
+![](./README_pic/densitymatrix_regetti_noentanglement.png)
 
 It's obvious that the anti-diagonal elements are near varnishing, which means it's more like classical state.
 
