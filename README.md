@@ -77,7 +77,7 @@ Knowing the amount of randomness, in realistic QRNG device, it's necessary to di
 
 In applications, the Toeplitz matrices are commonly used to extract the random numbers from raw outputs. According to [Leftover Hash Lemma](https://dl.acm.org/doi/10.1145/73007.73009), the Toeplitz-hashing extractor is a strong extractor, that is, the random seed $U_d$ can be reused for subsequent applications.
 
-After randomness extract, [NIST testing suite](https://csrc.nist.gov/projects/random-bit-generation/documentation-and-software) is used to assess the quality of random numbers. See the [Appendix A](#appA) for the comparison between PRNG (produced by the NIST software) and QRNG (taken from the [public data](https://www.dropbox.com/sh/hae9ht1cc426i5g/AABcuGgGyuNJMC0zOxIhOQBGa?dl=0) of [2].
+After randomness extract, [NIST testing suite](https://csrc.nist.gov/projects/random-bit-generation/documentation-and-software) is used to assess the quality of random numbers. See the [Appendix A](#appendix-a) for the comparison between PRNG (produced by the NIST software) and QRNG (taken from the [public data](https://www.dropbox.com/sh/hae9ht1cc426i5g/AABcuGgGyuNJMC0zOxIhOQBGa?dl=0) of [2].
 
 ## Experimental realization on cloud quantum computers
 
