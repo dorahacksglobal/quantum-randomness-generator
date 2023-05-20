@@ -73,7 +73,7 @@ The lower bound of entropy is determined by the min-entropy $H_\infty(X)$, which
 
 $$H_\infty(X)=-\log_2\left[\max_{x\in\chi}P(x)\right]$$
 
-Knowing the amount of randomness, in realistic QRNG device, it's necessary to distill the true randomness from classical noise. An extractor is a mapping function from $\{0,1\}^n\times\{0,1\}^d\rightarrow\{0,1\}^m$, such that for every probability distribution $X$ on $\{0,1\}^n$ with $H_\infty(X)\ge k$, the probability function $\text{Ext}(X,U_d)$ is $\varepsilon$-close to the uniform distribution $\{0,1\}^m$. The $U_d$ represents a uniform distribution on $\{0,1\}^d$, and $\varepsilon$-close is an error parameter of similarity of different distributions.
+Knowing the amount of randomness, in realistic QRNG device, it's necessary to distill the true randomness from classical noise. An extractor is a mapping function from $\lbrace0,1\rbrace^n\times\lbrace0,1\rbrace^d\rightarrow\lbrace0,1\rbrace^m$, such that for every probability distribution $X$ on $\lbrace0,1\rbrace^n$ with $H_\infty(X)\ge k$, the probability function $\text{Ext}(X,U_d)$ is $\varepsilon$-close to the uniform distribution $\lbrace0,1\rbrace^m$. The $U_d$ represents a uniform distribution on $\lbrace0,1\rbrace^d$, and $\varepsilon$-close is an error parameter of similarity of different distributions.
 
 In applications, the Toeplitz matrices are commonly used to extract the random numbers from raw outputs. According to [Leftover Hash Lemma](https://dl.acm.org/doi/10.1145/73007.73009), the Toeplitz-hashing extractor is a strong extractor, that is, the random seed $U_d$ can be reused for subsequent applications.
 
