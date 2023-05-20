@@ -142,7 +142,7 @@ To determine the min-entropy value, we compare the criteria in paper [6] (see [`
 
 So, we choose the min-entropy calculation in paper [6], and the min-entropy is $0.186$ for our experimental parameters. We also note that for different parameters, the relationship of min-entropy between paper [6] and paper [4] is different. When trial number is larger, the calculation in paper [4] can obtain larger min-entropy. 
 
-Finally, we use the Toeplitz-hashing extractor to extract the ultimate random numbers, see [`Randomness_extraction.ipynb`](./Randomness_extraction.ipynb). As a result, we obtain $74305$ random numbers.
+Finally, we use the Toeplitz-hashing extractor to extract the ultimate random numbers, see [`Randomness_extraction.ipynb`](./Randomness_extraction.ipynb). As a result, we obtain $74305$ random numbers (see [`regetti_DIQRNG.txt`](./regetti_DIQRNG.txt)).
 
 **STEP 4: NIST test for the output of random numbers**
 
