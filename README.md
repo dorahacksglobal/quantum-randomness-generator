@@ -113,17 +113,17 @@ To achieve the device-independent, a Bell state is necessary, which can be creat
 
 **STEP 1: Entanglement generation and characterization**
 
-In our experiment, we use the Regetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from the AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, with single-qubit gate fidelity of $99.7$%, and two-qubit gate fidelity of $93.6$%.
+In our experiment, we use the Rigetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from the AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, with single-qubit gate fidelity of $99.7$%, and two-qubit gate fidelity of $93.6$%.
 
-First, we use quantum tomography [5] to reconstruct the density matrix of the Bell state (see [`Regetti_Tomography_pub.ipynb`](./Regetti_Tomography_pub.ipynb) and [`DM_reconstruction_regetti.ipynb`](./DM_reconstruction_regetti.ipynb)), as the following shows:
+First, we use quantum tomography [5] to reconstruct the density matrix of the Bell state (see [`Rigetti_Tomography_pub.ipynb`](./Rigetti_Tomography_pub.ipynb) and [`DM_reconstruction_rigetti.ipynb`](./DM_reconstruction_rigetti.ipynb)), as the following shows:
 
-![](./README_pic/densitymatrix_regetti.png)
+![](./README_pic/densitymatrix_rigetti.png)
 
 The fidelity can be calculated as $86.87$%, which is larger than the classical threshold of $50$%. And the non-zero values of anti-diagonal elements are direct evidence for the entanglement.
 
 **STEP 2: CHSH game**
 
-Then, we perform the CHSH game with `shots = 1E5` for every setting (see [`Regetti_CHSH_pub.ipynb`](./Regetti_CHSH_pub.ipynb)) and get the results as the following table shows:
+Then, we perform the CHSH game with `shots = 1E5` for every setting (see [`Rigetti_CHSH_pub.ipynb`](./Rigetti_CHSH_pub.ipynb)) and get the results as the following table shows:
 
 | Basis Setting | $(a_i, b_i) = (0, 0)$ | $(a_i, b_i) = (0, 1)$ | $(a_i, b_i) = (1, 0)$ |$(a_i, b_i) = (1, 1)$|
 |:-:|:-:|:-:|:-:|:-:|
@@ -142,7 +142,7 @@ To determine the min-entropy value, we compare the criteria in paper [6] (see [`
 
 So, we choose the min-entropy calculation in paper [6], and the min-entropy is $0.186$ for our experimental parameters. We also note that for different parameters, the relationship of min-entropy between paper [6] and paper [4] is different. When trial number is larger, the calculation in paper [4] can obtain larger min-entropy. 
 
-Finally, we use the Toeplitz-hashing extractor to extract the ultimate random numbers, see [`Randomness_extraction.ipynb`](./Randomness_extraction.ipynb). As a result, we obtain $74305$ random numbers (see [`regetti_DIQRNG.txt`](./regetti_DIQRNG.txt)).
+Finally, we use the Toeplitz-hashing extractor to extract the ultimate random numbers, see [`Randomness_extraction.ipynb`](./Randomness_extraction.ipynb). As a result, we obtain $74305$ random numbers (see [`rigetti_DIQRNG.txt`](./rigetti_DIQRNG.txt)).
 
 **STEP 4: NIST test for the output of random numbers**
 
@@ -169,7 +169,7 @@ In summary, we demonstrate the realization of Bell's theorem certified quantum r
 
 ### Discussion
 
-Apart from the Regetti Aspen-M-3, we also benchmark the [Aria-1](https://ionq.com/quantum-systems/aria) from ionQ. Aria-1 has 25 qubits and its single-qubit gate fidelity is $99.94$% and two-qubit gate fidelity is $99.4$%. 
+Apart from the Rigetti Aspen-M-3, we also benchmark the [Aria-1](https://ionq.com/quantum-systems/aria) from ionQ. Aria-1 has 25 qubits and its single-qubit gate fidelity is $99.94$% and two-qubit gate fidelity is $99.4$%. 
 
 The density matrix of Bell state (see [`IonQ_Tomography_pub.ipynb`](./IonQ_Tomography_pub.ipynb) and [`DM_reconstruction_ionQ.ipynb`](./DM_reconstruction_ionQ.ipynb)) is:
 
@@ -183,13 +183,13 @@ But, we want to point out the different costs for Aria-1 and Aspen-M-3. From AWS
 
 ### Problems
 
-**Problem 1: Entanglement fidelity and CHSH score are not stable for Regetti quantum computer**
+**Problem 1: Entanglement fidelity and CHSH score are not stable for Rigetti quantum computer**
 
-Although in previous section, the entanglement fidelity is $86.87$% and the CHSH score is $0.8036$, which definitely prove the quantum computer is "quantum". But actually, in some accesses to Regetti, we obtain near entanglement-free result. Here, we give an example:
+Although in previous section, the entanglement fidelity is $86.87$% and the CHSH score is $0.8036$, which definitely prove the quantum computer is "quantum". But actually, in some accesses to Rigetti, we obtain near entanglement-free result. Here, we give an example:
 
 The density matrix is:
 
-![](./README_pic/densitymatrix_regetti_noentanglement.png)
+![](./README_pic/densitymatrix_rigetti_noentanglement.png)
 
 It's obvious that the anti-diagonal elements are near varnishing, which means it's more like classical state.
 
