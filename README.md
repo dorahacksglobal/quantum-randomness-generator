@@ -85,7 +85,7 @@ In this section, we explain the experimental details and results to generate qua
 
 ### Clauser-Horne-ShimonyHolt (CHSH) game
 
-CHSH game was proposed in paper [3], in which an inequality is used to discriminate the quantum mechanics from the local hidden-variable theories. Here, we empoly the same game settings as the paper [4]. In every trial, a Bell state is generated and distributed to two players, named Alice and Bob. The two players randomly select their measurements basis as $a_i\in\{0,1\}$ and $b_i\in\{0,1\}$. Then, the measurement outputs is denotes as $x_i, y_i$. The Bell value in single trial $i$ is calculated as
+CHSH game was proposed in the paper [3], in which inequality is used to discriminate the quantum mechanics from the local hidden-variable theories. Here, we employ the same game settings as the paper [4]. In every trial, a Bell state is generated and distributed to two players, named Alice and Bob. The two players randomly select their measurements' basis as $a_i\in\{0,1\}$ and $b_i\in\{0,1\}$. Then, the measurement outputs are denoted as $x_i, y_i$. The Bell value in a single trial $i$ is calculated as
 
 $$J_i=\begin{cases}
 1,&\text{if}\quad x_i\bigoplus y_i=a_ib_i \\
@@ -100,7 +100,7 @@ here, $3/4$ is the classical threshold.
 
 ### Quantum circuits
 
-To achieve the device-independent, a Bell state is necessary, which can be created by a `Hadamard gate` for qubit $0$ and a `controlled-not (CNOT) gate` between qubit $0$ and qubit $1$. Then, Alice and Bob perform independent and random measurements on their own qubit. For Alice, her measurements have two possible settings: $\sigma_z$ and $\sigma_x$, which are [Pauli matrices](https://en.wikipedia.org/wiki/Pauli_matrices). Similarly, for Bob his settings are: $\frac{1}{\sqrt{2}}\left(\sigma_z+\sigma_x\right)$ and $\frac{1}{\sqrt{2}}\left(\sigma_z-\sigma_x\right)$. Thus, there are four possible quantum circuits, and we summarize here (using [Qiskit](https://qiskit.org/))
+To achieve the device-independent, a Bell state is necessary, which can be created by a `Hadamard gate` for qubit $0$ and a `controlled-not (CNOT) gate` between qubit $0$ and qubit $1$. Then, Alice and Bob perform independent and random measurements on their qubit. For Alice, her measurements have two possible settings: $\sigma_z$ and $\sigma_x$, which are [Pauli matrices](https://en.wikipedia.org/wiki/Pauli_matrices). Similarly, for Bob his settings are: $\frac{1}{\sqrt{2}}\left(\sigma_z+\sigma_x\right)$ and $\frac{1}{\sqrt{2}}\left(\sigma_z-\sigma_x\right)$. Thus, there are four possible quantum circuits, and we summarize them here (using [Qiskit](https://qiskit.org/))
 
 | Quantum Circuits | Qiskit plot |
 | ---------------- | ----------- |
@@ -113,9 +113,9 @@ To achieve the device-independent, a Bell state is necessary, which can be creat
 
 **STEP 1: Entanglement generation and characterization**
 
-In our experiment, we use the Regetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, single-qubit gate fidelity of $99.7$%, two-qubit gate fidelity of $93.6$%.
+In our experiment, we use the Regetti [Aspen-M-3](https://qcs.rigetti.com/qpus) quantum computer from the AWS Braket service. This superconducting chip features 79 qubits, and the median $T_1$ time is $22.1\ \mu s$, with single-qubit gate fidelity of $99.7$%, and two-qubit gate fidelity of $93.6$%.
 
-First, we use quantum tomography [5] to reconstruct the denstiy matrix of Bell state (see [`Regetti_Tomography_pub.ipynb`](./Regetti_Tomography_pub.ipynb) and [`DM_reconstruction_regetti.ipynb`](./DM_reconstruction_regetti.ipynb)), as the following shows:
+First, we use quantum tomography [5] to reconstruct the density matrix of the Bell state (see [`Regetti_Tomography_pub.ipynb`](./Regetti_Tomography_pub.ipynb) and [`DM_reconstruction_regetti.ipynb`](./DM_reconstruction_regetti.ipynb)), as the following shows:
 
 ![](./README_pic/densitymatrix_regetti.png)
 
