@@ -104,10 +104,10 @@ To achieve the device-independent, a Bell state is necessary, which can be creat
 
 | Quantum Circuits | Qiskit plot |
 | ---------------- | ----------- |
-| $(a_i, b_i) = (0, 0)$ | <img src="./README_pic/a0b0_circuit.png" width = "400"> |
-| $(a_i, b_i) = (0, 1)$ | <img src="./README_pic/a0b1_circuit.png" width = "400"> |
-| $(a_i, b_i) = (1, 0)$ | <img src="./README_pic/a1b0_circuit.png" width = "400"> |
-| $(a_i, b_i) = (1, 1)$ | <img src="./README_pic/a1b1_circuit.png" width = "400"> |
+| $(a_i, b_i) = (0, 0)$ | <img src="README_pic/a0b0_circuit.png" width = "400"> |
+| $(a_i, b_i) = (0, 1)$ | <img src="README_pic/a0b1_circuit.png" width = "400"> |
+| $(a_i, b_i) = (1, 0)$ | <img src="README_pic/a1b0_circuit.png" width = "400"> |
+| $(a_i, b_i) = (1, 1)$ | <img src="README_pic/a1b1_circuit.png" width = "400"> |
 
 ### Results
 
